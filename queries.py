@@ -1,5 +1,4 @@
 import psycopg2
-import bleach
 
 def connect():
     """Connect to the PostgreSQL database.  Returns a database connection."""
@@ -18,5 +17,17 @@ def top_items(item):
 
 	return articles 
 
+def high_errors():
+	conn = connect()
+	curs = conn.cursor()
+	curs.execute("SELECT date, err_pcnt FROM log_errors where err_pcnt>1")
+	dates = curs.fetchall()
+	conn.commit()
+	conn.close()
+
+	return dates
+
+
 print(top_items("title"))
 print(top_items("name"))
+print(high_errors())
