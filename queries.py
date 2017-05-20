@@ -11,11 +11,11 @@ def top_items(item):
  			 	SELECT {0}, COUNT({0}) as views from articles_with_logs
  			 	GROUP BY {0} ORDER BY views DESC
  			 	""".format(item))
-	articles = curs.fetchall()
+	items = curs.fetchall()
 	conn.commit()
 	conn.close()
 
-	return articles 
+	return items 
 
 def high_errors():
 	conn = connect()
@@ -27,7 +27,10 @@ def high_errors():
 
 	return dates
 
+# print(top_items("title"))
+# print(top_items("name"))
+# print(high_errors())
 
-print(top_items("title"))
-print(top_items("name"))
-print(high_errors())
+def print_results(results):
+	for item in results:
+	print(item[0] + ' - ' + str(item[1]))
