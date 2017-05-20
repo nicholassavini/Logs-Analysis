@@ -28,7 +28,16 @@ def high_errors():
 	return dates
 
 def print_results(results):
+	items = ''
 	for item in results:
-		print(item[0] + ' - ' + str(item[1]))
+		items += item[0] + ' - ' + str(item[1]) +"\n"
+	return items
 
+print("Here are the top articles, listed by views:\n")
 print(print_results(top_items("title")))
+
+print("\nHere are the top authors, listed by views:\n")
+print(print_results(top_items("name")))
+
+print("\nHere are all the dates with error percentages greater than 1%:\n")
+print(print_results(high_errors()))
