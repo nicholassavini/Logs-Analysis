@@ -27,10 +27,8 @@ def high_errors():
 
 	return dates
 
-# print(top_items("title"))
-# print(top_items("name"))
-# print(high_errors())
-
 def print_results(results):
 	for item in results:
-	print(item[0] + ' - ' + str(item[1]))
+		print(item[0] + ' - ' + str(item[1]))
+
+print(print_results(top_items("title")))
