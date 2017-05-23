@@ -8,7 +8,7 @@ def connect():
     return psycopg2.connect("dbname=news")
 
 
-def top_items(item):
+def top_items(item, limit):
     """
     Runs the query that fetches the top items that are provided as a parameter
     """
@@ -16,10 +16,9 @@ def top_items(item):
     curs = conn.cursor()
     curs.execute("""
                 SELECT {0}, COUNT({0}) as views from articles_with_logs
-                GROUP BY {0} ORDER BY views DESC
-                """.format(item))
+                GROUP BY {0} ORDER BY views DESC LIMIT {1}
+                """.format(item, limit))
     items = curs.fetchall()
-    conn.commit()
     conn.close()
 
     return items
@@ -31,7 +30,6 @@ def high_errors():
     curs = conn.cursor()
     curs.execute("SELECT date, err_pcnt FROM log_errors where err_pcnt>1")
     dates = curs.fetchall()
-    conn.commit()
     conn.close()
 
     return dates
@@ -50,10 +48,10 @@ def print_results(results):
 
 # Prints the answers to all of the projects questions
 print("Here are the top articles, listed by views:\n")
-print(print_results(top_items("title")))
+print(print_results(top_items("title", 3)))
 
 print("\nHere are the top authors, listed by views:\n")
-print(print_results(top_items("name")))
+print(print_results(top_items("name", "ALL")))
 
 print("\nHere are all the dates with error percentages greater than 1%:\n")
 print(print_results(high_errors()))
