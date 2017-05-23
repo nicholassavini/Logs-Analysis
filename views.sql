@@ -1,5 +1,5 @@
 \c news
-# View to see articles with their authors
+-- View to see articles with their authors
 CREATE VIEW articles_with_authors AS
 	SELECT
 	title,
@@ -9,7 +9,7 @@ CREATE VIEW articles_with_authors AS
 	INNER JOIN authors
 	ON authors.id=articles.author;
 
-# View to see articles with their author information and the number of views
+-- View to see articles with their author information and the number of views
 CREATE VIEW articles_with_logs AS
 	SELECT
 	title,
@@ -18,7 +18,7 @@ CREATE VIEW articles_with_logs AS
 	INNER JOIN log
 	ON log.path=articles_with_authors.new_slug;
 
-# View to see the number of errors people encountered when trying to view pages.
+-- View to see the number of errors people encountered when trying to view pages.
 CREATE VIEW log_errors AS
 	SELECT
 	TO_CHAR(time, 'MM/DD/YYYY') as date,
